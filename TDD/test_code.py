@@ -25,6 +25,5 @@ class Tests(unittest.TestCase):
         self.assertEqual(mycode.divide(5,2),2.5)
         self.assertEqual(mycode.divide(5,0),"Invalid")#removed / slash in test case (added ,).
 
-
 if __name__ == "__main__":
     unittest.main()
