@@ -1,4 +1,4 @@
-#Copied and pasted test code from mycode.py to test_code.py
+#??? Copied and pasted test code from mycode.py to test_code.py
 import unittest
 import mycode
 
@@ -23,7 +23,8 @@ class Tests(unittest.TestCase):
         self.assertEqual(mycode.divide(6,6),1)
         self.assertEqual(mycode.divide(12,2),6)
         self.assertEqual(mycode.divide(5,2),2.5)
-        self.assertEqual(mycode.divide(5,0),"Invalid")#removed / slash in test case.
+        self.assertEqual(mycode.divide(5,0),"Invalid")#removed / slash in test case (added ,).
+
 
 if __name__ == "__main__":
     unittest.main()
