@@ -35,7 +35,6 @@ to_address = send_email("To: ")
 print("Enter a message:\n")
 
 email_lines = [f"From: {from_address}", f"To: {to_address}"]
-print(email_lines)
 
 while True:
     # EOFError occurs when python expects input but none is received
@@ -44,7 +43,7 @@ while True:
     except EOFError:
         break
     else:
-        email_lines = email_lines.append(line)
+        email_lines.append(line)
 
 msg = "\r\n".join(email_lines)
 print(f"Your message is {msg}. Message length is: {len(msg)}")
