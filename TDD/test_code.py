@@ -1,4 +1,3 @@
-#??? Copied and pasted test code from mycode.py to test_code.py
 import unittest
 import mycode
 
@@ -15,15 +14,15 @@ class Tests(unittest.TestCase):
         self.assertEqual(mycode.multiply(5,2),10)
 
     def test_subtract(self):
-        self.assertEqual(mycode.subtract(6,6),0)#??? why was .add used instead of .subtract(I'm changing .add to subtract)
-        self.assertEqual(mycode.subtract(-1,-1),0)#??? negative 1 - negative 1 == 0, not 2(I'm changing expected out from 2 to 0)
+        self.assertEqual(mycode.subtract(6,6),0)
+        self.assertEqual(mycode.subtract(-1,-1),0)
         self.assertEqual(mycode.subtract(5,2),3)
 
     def test_divide(self):
         self.assertEqual(mycode.divide(6,6),1)
         self.assertEqual(mycode.divide(12,2),6)
         self.assertEqual(mycode.divide(5,2),2.5)
-        self.assertEqual(mycode.divide(5,0),"Invalid")#removed / slash in test case (added ,).
+        self.assertEqual(mycode.divide(5,0),"Invalid")
 
 if __name__ == "__main__":
     unittest.main()
