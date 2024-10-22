@@ -1,25 +1,57 @@
-import unittest
-import mycode
+# Calculator?
 
-class Tests(unittest.TestCase):
+def calculator():
+    num1 = int(input("Enter first number:\n"))
+    num2 = int(input("Enter second number:\n"))
+    operation = input("Choose:\n1)Add:\n2)Subtract:\n3)Multiply:\n4)Divide:\n")
+    
+    if operation == "1":
+        add(num1,num2)
 
-    def test_add(self):
-        self.assertEqual(mycode.add(6,6),12)
-        self.assertEqual(mycode.add(-1,2),1)
-        self.assertEqual(mycode.add(-5,2),-3)
+    elif operation == "2":
+        subtract(num1,num2)
+        
 
-    def test_multiply(self):
-        self.assertEqual(mycode.multiply(6,3),18)
-        self.assertEqual(mycode.multiply(1,1),1)
-        self.assertEqual(mycode.multiply(5,2),10)
+    elif operation == "3":
+        multiply(num1,num2)
+        
+        
+    elif operation == "4":
+        divide(num1,num2)
+        
+    else:
+        return "Please choose from 1-4"
 
-    def test_subtract(self):
-        self.assertEqual(mycode.add(6,6),0)
-        self.assertEqual(mycode.add(-1,-1),2)
-        self.assertEqual(mycode.add(5,2),3)
+def add(num1,num2):
+    add = num1 + num2
+    return add
 
-    def test_divide(self):
-        self.assertEqual(mycode.divide(6,6),1)
-        self.assertEqual(mycode.divide(12,2),6)
-        self.assertEqual(mycode.divide(5,2),2.5)
-        self.assertEqual(mycode.divide(5/0),"Invalid")
+def subtract(num1,num2):
+    subtract = num1 - num2
+    return subtract
+
+def multiply(num1,num2):
+    multiply = num1 * num2
+    return multiply
+
+def divide(num1,num2):
+    if num2 == 0:
+        return "Invalid"
+
+    divide = num1 / num2
+    
+    return divide
+
+
+# To not run the app but just the test even with user input, call if name stuff
+if __name__ == "__main__":
+    calculator()
+
+
+
+
+    
+
+    
+
+# calculator()
