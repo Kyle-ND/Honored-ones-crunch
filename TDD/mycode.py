@@ -1,25 +1,43 @@
-import unittest
-import mycode
+#import math 
+#first_num = int(input("Enter first number: "))
+#second_num = int(input("Enter second number: "))
+#operator = input("Enter operator: ")
 
-class Tests(unittest.TestCase):
+#operators=["+","-","/","*"]
 
-    def test_add(self):
-        self.assertEqual(mycode.add(6,6),12)
-        self.assertEqual(mycode.add(-1,2),1)
-        self.assertEqual(mycode.add(-5,2),-3)
+#add = (first_num + second_num)    
+#multiply = (first_num * second_num)   
+#subtract = (first_num - second_num)  
+#divide = (first_num / second_num)
+    
+#def calculator():
+    #for operator in operators:
 
-    def test_multiply(self):
-        self.assertEqual(mycode.multiply(6,3),18)
-        self.assertEqual(mycode.multiply(1,1),1)
-        self.assertEqual(mycode.multiply(5,2),10)
+        #if operator == "+" :
+            #print(add)
 
-    def test_subtract(self):
-        self.assertEqual(mycode.add(6,6),0)
-        self.assertEqual(mycode.add(-1,-1),2)
-        self.assertEqual(mycode.add(5,2),3)
+        #elif operators == "*":
+         #print(multiply)
+    
+        #elif operator == "-":
+           #print(subtract)
+        #else:
+           #print(divide)
 
-    def test_divide(self):
-        self.assertEqual(mycode.divide(6,6),1)
-        self.assertEqual(mycode.divide(12,2),6)
-        self.assertEqual(mycode.divide(5,2),2.5)
-        self.assertEqual(mycode.divide(5/0),"Invalid")
+#calculator()
+
+def add(s,m):
+    return s+m
+
+def multiply(s,m):
+    return s*m
+
+def subtract(s,m):
+    return s-m
+
+def divide(s,m):
+    if s==0 or m==0:
+        return "Invalid"
+    else:
+        return s/m
+    
