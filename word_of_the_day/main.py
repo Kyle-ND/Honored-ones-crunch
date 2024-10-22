@@ -28,6 +28,32 @@ def send_email(message):
     an email to your self using 
     smtplib and return 'success ' or 'fail' if sending email failed
     """
+    return input(message).strip()
+
+from_address = send_email("From: ")
+to_address = send_email("To: ")
+print("Enter a message:\n")
+
+email_lines = [f"From: {from_address}", f"To: {to_address}"]
+print(email_lines)
+
+while True:
+    # EOFError occurs when python expects input but none is received
+    try:
+        line  = input()
+    except EOFError:
+        break
+    else:
+        email_lines = email_lines.append(line)
+
+msg = "\r\n".join(email_lines)
+print(f"Your message is {msg}. Message length is: {len(msg)}")
+
+server = smtplib.SMTP("localhost")
+server.set_debuglevel(1)
+server.sendmail(from_address,to_address,msg)
+server.quit()
+
 
 def main():
     """
