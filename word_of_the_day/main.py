@@ -45,6 +45,7 @@ while True:
     else:
         email_lines.append(line)
 
+# Code successfully appends to email line, then goes through the while True loop again and exits after line = input()
 msg = "\r\n".join(email_lines)
 print(f"Your message is {msg}. Message length is: {len(msg)}")
 
