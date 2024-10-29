@@ -17,30 +17,25 @@ def get_qoute():
 
 def send_email(message):
     """
+    password = 'uhqx blcd qrve updl'
     TODO
     write a function that sends
     an email to your self using 
     smtplib and return 'success ' or 'fail' if sending email failed
     """
-    mail = smtplib.SMTP('smtp.gmail.com', 587)
-    mail.ehlo()
-    mail.starttls()
-    sender = 'scelonkululeko2@gmail.com'
-    password = 'uhqx blcd qrve updl'
-    mail.login(sender, password)
+    admin_email = "scelonkululeko2@gmail.com"
+    send_to ="scelonkululeko2@gmail.com"
+    password = "uhqxblcdqrveupdl"
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as sever:
+            sever.starttls()
+            sever.login(admin_email, password)
 
-    recipient = 'bnnneffect2@gmail.com'
-    subject = 'Email to my self'
-
-    header = f'To: {recipient}\nFrom: {sender}\nSubject: {subject}\n'
-    message = header + message
-
-    mail.quit()
-
-    if mail == "success":
-        return "success"
-    else:
-        return "failed"
+            sever.sendmail(from_addr=admin_email, to_addrs=send_to, msg=f"subject: word of the day!\n\n{message}")
+        print("email sent :")
+    except smtplib.SMTPServerDisconnected:
+        print("Error while sending email")
+        print("Connection lost : )")
 
 def main():
     """
@@ -48,4 +43,5 @@ def main():
     write logic to use the two functions here
     """
     return send_email(get_qoute())
-print(main())
+if __name__ == '__main__':
+    main()
