@@ -26,7 +26,7 @@ def send_email(message):
     """
     admin_email = "scelonkululeko2@gmail.com"
     send_to ="scelonkululeko2@gmail.com"
-    password = password_keep()
+    password = password_keep()#111
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as sever:
             sever.starttls()
