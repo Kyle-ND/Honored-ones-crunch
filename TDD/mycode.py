@@ -9,7 +9,7 @@ def subtract(x, y):
 
 def divide(x, y):
     if x == 0 or y == 0:
-        diff = "Invalid"
+        diff =  "Invalid"
     else:
         diff = x / y
     return diff
