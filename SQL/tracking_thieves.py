@@ -15,18 +15,18 @@ def identify_thieves():
     print(witness_testimony)
 
     #Placing people at the crime scene
-    print("\n\nThe details of the people who left the crime scene around the time the offense took place are as follows:")
-    first_round_of_suspects = database.execute("SELECT * FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25')")
+    print("\n\nThe people who left the crime scene around the time the offense took place are:")
+    first_round_of_suspects = database.execute("SELECT name FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25')")
     print(first_round_of_suspects)
 
     #Placing suspects who made an ATM transaction at Leggett Street
     print('\n\nOur shortlist of suspects is: ')
-    second_round_of_suspects = database.execute("SELECT * FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25') AND id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE year='2023' AND month='7' AND day='28' AND atm_location='Leggett Street' AND transaction_type='withdraw'))")
+    second_round_of_suspects = database.execute("SELECT name FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25') AND id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE year='2023' AND month='7' AND day='28' AND atm_location='Leggett Street' AND transaction_type='withdraw'))")
     print(second_round_of_suspects)
 
     #Placing suspect who made a call
     print("\n\nA further shortlist of suspects is: ")
-    third_round_of_suspects = database.execute("SELECT * FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25') AND id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE year='2023' AND month='7' AND day='28' AND atm_location='Leggett Street' AND transaction_type='withdraw')) AND phone_number IN (SELECT caller FROM phone_calls WHERE year='2023' AND month='7' AND day='28' AND duration<60)")
+    third_round_of_suspects = database.execute("SELECT name FROM people WHERE license_plate IN (SELECT license_plate FROM bakery_security_logs WHERE year='2023' AND month='7' AND day='28' AND hour='10' AND minute BETWEEN '15' AND '25') AND id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE year='2023' AND month='7' AND day='28' AND atm_location='Leggett Street' AND transaction_type='withdraw')) AND phone_number IN (SELECT caller FROM phone_calls WHERE year='2023' AND month='7' AND day='28' AND duration<60)")
     print(third_round_of_suspects)
 
     #Placing suspect/s at the airport
@@ -47,6 +47,13 @@ def identify_thieves():
     print("\n\nBruce's flight destination is: ")
     destination = database.execute("SELECT city FROM airports WHERE id IN (SELECT destination_airport_id FROM flights WHERE year='2023' AND month='7' AND day='29' AND hour='8' AND minute ='20')")
     print(destination)
+
+    #Finding the accomplice
+    bruce_cell_number = database.execute("SELECT phone_number FROM people WHERE name='Bruce'")
+    print(f"\n\nBruce's cell number is:\n{bruce_cell_number}")
+    print("and his accomplice is: ")
+    accomplice = database.execute("SELECT name FROM people WHERE phone_number IN (SELECT receiver FROM phone_calls WHERE year='2023' AND month='7' AND day='28' AND duration<60 AND caller='(367) 555-5533')")
+    print(accomplice)
 
 
 identify_thieves()
