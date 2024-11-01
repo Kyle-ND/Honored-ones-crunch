@@ -15,7 +15,7 @@ def get_qoute():
         random_quote = file_reader[rand_index]
         print(random_quote)
         return random_quote
-get_qoute()
+
 
 
 
@@ -30,33 +30,34 @@ def send_email(message):
     """
     return input(message).strip()
 
-from_address = send_email("From: ")
-to_address = send_email("To: ")
-print("Enter a message:\n")
 
-email_lines = [f"From: {from_address}", f"To: {to_address}"]
 
-while True:
-    # EOFError occurs when python expects input but none is received
-    try:
-        line  = input()
-    except EOFError:
-        break
-    else:
-        email_lines.append(line)
-
-# Code successfully appends to email line, then goes through the while True loop again and exits after line = input()
-msg = "\r\n".join(email_lines)
-print(f"Your message is {msg}. Message length is: {len(msg)}")
-
-server = smtplib.SMTP("localhost")
-server.set_debuglevel(1)
-server.sendmail(from_address,to_address,msg)
-server.quit()
 
 
 def main():
-    """
-    TODO
-    write logic to use the two functions here
-    """
+    to_address = send_email("To: ")
+    lines = get_qoute()
+    send_mail(lines,to_address)
+
+
+
+def send_mail(message,send_to):
+    admin_email = "onasihle123@gmail.com"
+    password = "qorrigumncekigba"
+    try:
+    # starting server and connecting to gmail
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(admin_email,password)
+
+            server.sendmail(from_addr=admin_email,to_addrs=send_to,msg=f"subject: Word of the Day!\n\n{message}")
+
+        print("email sent :)") 
+    except smtplib.SMTPServerDisconnectedl:
+        print("Error while sending email ") 
+        print("connection lost :(")  
+
+
+if __name__ == "__main__":
+    main()
+    

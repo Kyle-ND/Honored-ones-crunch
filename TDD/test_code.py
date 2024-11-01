@@ -23,5 +23,6 @@ class Tests(unittest.TestCase):
         self.assertEqual(mycode.divide(12,2),6)
         self.assertEqual(mycode.divide(5,2),2.5)
         self.assertEqual(mycode.divide(5,0),"Invalid")
+        
 if __name__ == "__main__":
     unittest.main()
