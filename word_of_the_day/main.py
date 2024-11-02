@@ -1,6 +1,13 @@
 import smtplib
 import random
 
+
+def main():
+    to_address = send_email("To: ")
+    lines = get_qoute()
+    send_mail(lines,to_address)
+
+
 def get_qoute():
     """
     TODO
@@ -12,7 +19,9 @@ def get_qoute():
         file_reader = quotes_file.readlines()
 
         rand_index = random.randrange(0,len(file_reader) -1)
+        # Assigns a number, in this range to rand_index
         random_quote = file_reader[rand_index]
+        # Like saying random_quote = file_reader[2]
         print(random_quote)
         return random_quote
 
@@ -33,14 +42,6 @@ def send_email(message):
 
 
 
-
-def main():
-    to_address = send_email("To: ")
-    lines = get_qoute()
-    send_mail(lines,to_address)
-
-
-
 def send_mail(message,send_to):
     admin_email = "onasihle123@gmail.com"
     password = "qorrigumncekigba"
@@ -53,7 +54,7 @@ def send_mail(message,send_to):
             server.sendmail(from_addr=admin_email,to_addrs=send_to,msg=f"subject: Word of the Day!\n\n{message}")
 
         print("email sent :)") 
-    except smtplib.SMTPServerDisconnectedl:
+    except SMTPServerDisconnected:
         print("Error while sending email ") 
         print("connection lost :(")  
 
