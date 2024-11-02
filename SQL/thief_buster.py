@@ -33,7 +33,7 @@ for row in bakery_logs:
 
 atm_trans = cur.execute("SELECT * FROM atm_transactions")
 for row in atm_trans:
-    if 2023 == row[2] and 7 == row[3] and 28 == row[4] and "Leggett Street" in row[5]:
+    if 2023 == row[2] and 7 == row[3] and 28 == row[4]:
         atm_list.append(row)
 
 bank_acc = cur.execute("SELECT * FROM bank_accounts")
@@ -66,128 +66,87 @@ for row in passengers:
 cur.close()
 conn.close()
 
+def get_crime_report():
+    print("Crime report:")
+    for i in range(len(crime_scene_list)):
+        if "CS50 duck" in str(crime_scene_list[i]):
+            print(crime_scene_list[i])
+# get_crime_report()
 
-# print("Crime report:")
-# for i in range(len(crime_scene_list)):
-#     if "CS50 duck" in str(crime_scene_list[i]):
-#         print(crime_scene_list[i], "\n*************************************************************************")
-#         print()
-     
-print("Corrisponding invterviews:")
-for i in range(len(interview_list)):
-    if "bakery" in str(interview_list[i]):
-        print(interview_list[i], "\n")
-print("*********************************************************************************************")
-    
+def get_inteviews():
+    print("Corrisponding invterviews:")
+    for i in range(len(interview_list)):
+        if "bakery" in str(interview_list[i]):
+            print(interview_list[i], "\n")
+# get_inteviews()
 
-print("Thief's car number plate is one these")
-num_plates = []
-for i in range(len(bakery_list)):# thiefs car number plates
-    bakery_split = str(bakery_list[i]).split(",")
-    if int(bakery_split[5]) >= 16 and int(bakery_split[5]) <= 25:
-        # print(bakery_list[i])
-        num_plates.append(bakery_split[7].replace(")", ""))
+def get_exited_car():
+     print("\nCars that left between 10:15 and 10:25 :")
+     for i in range(len(bakery_list)):
+          bakery_split = str(bakery_list[i]).split(",")
+          if "10" in bakery_split[4] and int(bakery_split[5]) > 15 and int(bakery_split[5]) <= 25:
+               print(bakery_split) 
+get_exited_car()
 
-# print(num_plates)
-print("**********************************************************************************\n")
-print("Main Suspects are:")
-main_suspects = []
-for i in range(len(people_list)):
-     people_split = str(people_list[i]).split(",")
-     for num in range(len(num_plates)):
-        if num_plates[num] in people_split[4]: 
-            print(people_list[i])
-            main_suspects.append(people_list[i])
-# print(main_suspects, "\n")
-# print("The call's under 60 minutes")
-suspects_calls = []
-for i in range(len(call_list)):
-     call_split = str(call_list[i]).split(",")
-     call_split2 = call_split[6].split(")")
-     if int(call_split2[0]) < 60:
-        # print(call_list[i], "\n")
-        suspects_calls.append(call_list[i])
+def get_atm_withdrawals():
+     print("\nATM transactions made at Leggett Street:")
+     for i in range(len(atm_list)):
+          atm_split = str(atm_list[i]).split(",")
+          if "Leggett Street" in atm_split[5] and "withdraw" in atm_split[6]:
+               print(atm_list[i])
+get_atm_withdrawals()       
 
-print("\nAter cross referencing main suspects and calls under 60 minues:")
-main_suspects_calls = []
-for i in range(len(suspects_calls)):
-    suspects_calls_splt = str(suspects_calls[i]).split(",")
-    main_suspects_split = str(main_suspects)
-    #  for main in range(len(main_suspects)):
-    if main_suspects_split[2] in main_suspects_split[i]:
-         print(suspects_calls[i])
-         main_suspects_calls.append(suspects_calls[i])
-print(main_suspects_calls)
+print("\nCalls made under 60 seconds:")
+def get_calls():
+    calls = []
+    for i in range(len(call_list)):
+        call_split = str(call_list[i]).split(",")
+        if int(call_split[6].replace(")", "")) < 60:
+             print(call_list[i])
+             calls.append(call_list[i])
+    # return calls             
+get_calls()
 
+def get_earliest_flight():
+    #  print("\nEarliest flight out of Fiftyville tomorrow:")
+     for i in range(len(flights_list)):
+          flights_split = str(flights_list[i]).split(",")
+          if int(flights_split[6].replace(")", "")) < 10 and int(flights_split[7].replace(")", "")) < 30:
+               return ["\nEarliest flight out of Fiftyville tomorrow:", flights_list[i]]
+print(get_earliest_flight()[0], "\n" ,get_earliest_flight()[1])
 
+def get_escape_destination():
+     flights_split = str(get_earliest_flight()[1]).split(",")
+     for i in range(len(airports_list)):
+          airport_split = str(airports_list[i]).split(",")
+          if int(flights_split[2]) == int(airport_split[0].replace("(", "")):
+               return [airports_list[i], airports_list[i][3]]
+print("\nThe thief escaped to:\n", get_escape_destination()[0], "\n", get_escape_destination()[1])
 
+print("\nSuspect passengers :")
+def get_passenger():
+    sus_passengerd = []
+    for i in range(len(passengers_list)):
+        passengers_split = str(passengers_list[i]).split(",")
+        flight = int(get_earliest_flight()[1][0])
+        if flight == int(passengers_split[0].replace("(", "")):
+             sus_passengerd.append(passengers_list[i])
+    return sus_passengerd
+print(get_passenger())
 
-# print("Widthrawals at Leggett Street ")
-# withdraw = []
-# for i in range(len(atm_list)):
-#     atm_split = str(atm_list[i]).split(",")
-#     if "withdraw" in atm_split[6]:
-#         print(atm_list[i])
-#         withdraw.append(atm_list[i])
-# # print(withdraw)
+print("\nSuspected people are :")
+def get_people():
+    sus_people = []
+    for i in range(len(people_list)):
+        people_split = str(people_list[i]).split(",")
+        for passen in range(len(get_passenger())):
+             passengers_split = str(get_passenger()[passen]).split(",")
+             if passengers_split[1] in people_split[3]:
+                  print(people_list[i])
+                  sus_people.append(people_list[i])
+    # return sus_people
+get_people()
 
-
-print("flight out of Fiftyville tomorrow(29 july 2023) that the thief would have taken")
-for i in range(len(flights_list)):
-    flights_split = str(flights_list[i]).split(",")
-    if  "8" in flights_split[6] and "20" in flights_split[7]:
-        print(flights_list[i])
-print("**********************************************************************************\n")
-
-print("The thiefs destination.")
-
-for i in range(len(airports_list)):
-    airports_split = str(airports_list[i]).split(",")
-    if "4" in airports_split[0]:
-        print(airports_list[i])
-        print("The thief fled to ", airports_split[3])
-print("***************************************************")
-
-# print("The thief is one of these people")
-
-
-# print("The thief is... :")
-# thiefs_num = "" 
-# for i in range(len(people_list)):
-#      people_split = str(people_list[i]).split(",")
-#      if num_plates[1] in people_split[4]:
-#           print(people_list[i])
-#           thiefs_num = people_split[2]
-
-# print(thiefs_num)
-# print("******************************************************************")
-
-# print("The call's under 60 minutes")
-# suspects_calls = []
-# for i in range(len(call_list)):
-#      call_split = str(call_list[i]).split(",")
-#      call_split2 = call_split[6].split(")")
-#      if int(call_split2[0]) < 60:
-#         #   print(call_list[i], "\n")
-#           suspects_calls.append(call_list[i])
-
-# # print(suspects_calls)
-# print("**************************************************************")
-# print("Thief's call recever num:")
-# accomplice_num = ""
-# for i in range(len(suspects_calls)):
-#     suspects_calls_split = str(suspects_calls[i]).split(",")
-#     if thiefs_num in suspects_calls_split[1]:
-#         print(suspects_calls[i])
-#         accomplice_num = suspects_calls_split[2]
-# print(accomplice_num)
-
-# print("*************************************************************************")
-# accomplice_name = ""
-# for i in range(len(people_list)):
-#      people_split = str(people_list[i]).split(",")
-#      if accomplice_num in people_split[2]:
-#           print(people_list[i])
-#           accomplice_name = people_split[1]
-
-# print(accomplice_name)
+print("************************************************************************************************************")
+print("Thief is either Bruce of Kesly their accomplic are either Robin for Bruce and Melisa or Larry for kelsey")
+print("The thief fled to New York city")
